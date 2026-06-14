@@ -1,6 +1,6 @@
-# Key Prompts
+﻿# Key Prompts
 
-This document captures the significant prompts used to build FairShare. It is written to show the collaboration process: requirements were clarified first, context was maintained, implementation was phased, and each module was evaluated against the assignment before moving on.
+This document captures the significant prompts used to build Equishare. It is written to show the collaboration process: requirements were clarified first, context was maintained, implementation was phased, and each module was evaluated against the assignment before moving on.
 
 ## 1. Original Assignment Prompt
 
@@ -208,3 +208,4 @@ The AI found and fixed deployment/reproducibility gaps: missing pnpm package-man
 - Each feature was implemented as a milestone with documentation and verification.
 - The AI was asked to evaluate its own work against the assignment and fix gaps.
 - The final project is not just code; it includes reproducible context, deployment instructions, testing guidance, known trade-offs, and limitations.
+
