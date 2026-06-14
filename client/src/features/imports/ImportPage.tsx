@@ -1,5 +1,6 @@
 import { DragEvent, FormEvent, useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { motion } from "framer-motion";
 import { useSearchParams } from "react-router-dom";
 import {
   AlertTriangle,
@@ -166,8 +167,12 @@ export function ImportPage() {
 
   return (
     <div className="grid gap-6">
-      <section className="glass-panel relative overflow-hidden rounded-lg p-6">
-        <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-r from-mint/20 via-transparent to-coral/20" />
+      <motion.section
+        className="glass-panel import-hero relative overflow-hidden rounded-lg p-6"
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+      >
         <div className="relative grid gap-6 xl:grid-cols-[1fr_440px] xl:items-end">
           <div>
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-line bg-surface/80 px-3 py-1 text-xs font-semibold text-muted">
@@ -182,13 +187,18 @@ export function ImportPage() {
           </div>
           <StepRail active={step} currentImport={currentImport} />
         </div>
-      </section>
+      </motion.section>
 
       {step === "parsing" ? (
         <ParsingState fileName={file?.name || "expenses_export.csv"} />
       ) : (
         <section className="grid gap-4 xl:grid-cols-[0.9fr_1.1fr]">
-          <div className="glass-panel rounded-lg p-5">
+          <motion.div
+            className="glass-panel magnetic-panel rounded-lg p-5"
+            initial={{ opacity: 0, x: -18 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.35 }}
+          >
             <div className="mb-4 flex items-center justify-between gap-3">
               <h2 className="text-sm font-semibold uppercase tracking-[0.16em] text-muted">Step 1 - Upload</h2>
               {file && <span className="rounded-full bg-mint/10 px-3 py-1 text-xs font-semibold text-mint">{file.name}</span>}
@@ -211,7 +221,7 @@ export function ImportPage() {
                 }}
                 onDragLeave={() => setDragging(false)}
                 onDrop={handleDrop}
-                className={`grid min-h-56 cursor-pointer place-items-center rounded-lg border border-dashed p-6 text-center transition ${
+                className={`upload-dropzone grid min-h-56 cursor-pointer place-items-center rounded-lg border border-dashed p-6 text-center transition ${
                   dragging ? "border-mint bg-mint/10" : "border-line bg-elevated/40 hover:border-mint/60 hover:bg-surface/70"
                 }`}
               >
@@ -234,7 +244,7 @@ export function ImportPage() {
               </Button>
               {previewMutation.error && <p className="text-sm text-coral">{previewMutation.error.message}</p>}
             </form>
-          </div>
+          </motion.div>
 
           <ImportPreviewPanel currentImport={currentImport} severityCounts={severityCounts} />
         </section>
@@ -257,12 +267,18 @@ export function ImportPage() {
 function StepRail({ active, currentImport }: { active: ImportStep; currentImport?: CsvImportBatch }) {
   const activeIndex = steps.findIndex((item) => item.id === active);
   return (
-    <div className="grid gap-2 rounded-lg border border-line bg-surface/75 p-3">
+    <div className="step-rail grid gap-2 rounded-lg border border-line bg-surface/75 p-3">
       {steps.map((item, index) => {
         const done = index < activeIndex || (item.id === "summary" && currentImport?.report);
         const current = item.id === active;
         return (
-          <div key={item.id} className={`flex items-center gap-3 rounded-md p-3 transition ${current ? "bg-mint/10" : "bg-elevated/40"}`}>
+          <motion.div
+            key={item.id}
+            className={`flex items-center gap-3 rounded-md p-3 transition ${current ? "bg-mint/10" : "bg-elevated/40"}`}
+            initial={{ opacity: 0, x: 14 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: index * 0.04, duration: 0.25 }}
+          >
             <span className={`grid size-8 place-items-center rounded-full text-xs font-black ${done ? "bg-mint text-white" : current ? "bg-ink text-cloud" : "bg-surface text-muted"}`}>
               {done ? <Check size={15} /> : index + 1}
             </span>
@@ -270,7 +286,7 @@ function StepRail({ active, currentImport }: { active: ImportStep; currentImport
               <span className="block text-sm font-semibold text-ink">{item.label}</span>
               <span className="block truncate text-xs text-muted">{item.description}</span>
             </span>
-          </div>
+          </motion.div>
         );
       })}
     </div>

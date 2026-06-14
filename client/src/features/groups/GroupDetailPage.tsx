@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { ReactNode } from "react";
+import { motion } from "framer-motion";
 import { Link, useParams } from "react-router-dom";
 import {
   ArrowDownLeft,
@@ -74,15 +75,28 @@ export function GroupDetailPage() {
 
   return (
     <div className="grid gap-6 pb-24">
-      <a
+      <motion.a
         href="#add-expense"
-        className="fixed bottom-5 right-5 z-20 inline-flex min-h-12 items-center gap-2 rounded-full bg-ink px-5 text-sm font-bold text-cloud shadow-2xl transition hover:-translate-y-1 hover:shadow-mint/20 md:bottom-8 md:right-8"
+        className="button-prism fixed bottom-5 right-5 z-20 inline-flex min-h-12 items-center gap-2 overflow-hidden rounded-full bg-ink px-5 text-sm font-bold text-cloud shadow-2xl transition hover:shadow-mint/20 md:bottom-8 md:right-8"
+        initial={{ opacity: 0, y: 20, scale: 0.92 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        whileHover={{ y: -4, scale: 1.03 }}
+        whileTap={{ scale: 0.97 }}
       >
         <Plus size={18} /> Add expense
-      </a>
+      </motion.a>
 
-      <section className="glass-panel relative overflow-hidden rounded-lg p-6">
-        <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-r from-mint/20 via-transparent to-coral/20" />
+      <motion.section
+        className="glass-panel hero-panel relative overflow-hidden rounded-lg p-6"
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+      >
+        <div className="workspace-constellation" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+        </div>
         <div className="relative grid gap-8 lg:grid-cols-[1fr_360px] lg:items-end">
           <div>
             <div className="mb-5 flex flex-wrap items-center gap-2">
@@ -103,7 +117,12 @@ export function GroupDetailPage() {
             </div>
           </div>
 
-          <div className="rounded-lg border border-line bg-surface/75 p-4 shadow-xl">
+          <motion.div
+            className="rounded-lg border border-line bg-surface/75 p-4 shadow-xl backdrop-blur"
+            initial={{ opacity: 0, x: 18 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.12, duration: 0.35 }}
+          >
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted">Settlement status</p>
             <AnimatedSettlementStatus openBalanceCents={openBalanceCents} />
             {topDebtor ? (
@@ -119,9 +138,9 @@ export function GroupDetailPage() {
                 Everyone is settled.
               </div>
             )}
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       <Panel title="Members">
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">

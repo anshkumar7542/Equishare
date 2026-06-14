@@ -2,8 +2,8 @@ import type { InputHTMLAttributes, ReactNode, SelectHTMLAttributes, TextareaHTML
 
 export function Field({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <label className="grid gap-1.5 text-sm font-medium text-muted">
-      <span>{label}</span>
+    <label className="field-shell grid gap-1.5 text-sm font-medium text-muted">
+      <span className="field-label">{label}</span>
       {children}
     </label>
   );
@@ -12,7 +12,7 @@ export function Field({ label, children }: { label: string; children: ReactNode 
 export function Input(props: InputHTMLAttributes<HTMLInputElement>) {
   return (
     <input
-      className="focus-ring min-h-10 rounded-md border border-line bg-surface/80 px-3 py-2 text-sm text-ink shadow-sm transition placeholder:text-muted/70"
+      className="focus-ring min-h-10 rounded-md border border-line bg-surface/80 px-3 py-2 text-sm text-ink shadow-sm transition placeholder:text-muted/70 hover:border-mint/60"
       {...props}
     />
   );
@@ -21,7 +21,7 @@ export function Input(props: InputHTMLAttributes<HTMLInputElement>) {
 export function TextArea(props: TextareaHTMLAttributes<HTMLTextAreaElement>) {
   return (
     <textarea
-      className="focus-ring min-h-24 rounded-md border border-line bg-surface/80 px-3 py-2 text-sm text-ink shadow-sm transition placeholder:text-muted/70"
+      className="focus-ring min-h-24 rounded-md border border-line bg-surface/80 px-3 py-2 text-sm text-ink shadow-sm transition placeholder:text-muted/70 hover:border-mint/60"
       {...props}
     />
   );
@@ -30,7 +30,7 @@ export function TextArea(props: TextareaHTMLAttributes<HTMLTextAreaElement>) {
 export function Select(props: SelectHTMLAttributes<HTMLSelectElement>) {
   return (
     <select
-      className="focus-ring min-h-10 rounded-md border border-line bg-surface/80 px-3 py-2 text-sm text-ink shadow-sm transition"
+      className="focus-ring min-h-10 rounded-md border border-line bg-surface/80 px-3 py-2 text-sm text-ink shadow-sm transition hover:border-mint/60"
       {...props}
     />
   );

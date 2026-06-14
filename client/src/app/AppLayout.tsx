@@ -27,9 +27,14 @@ export function AppLayout() {
   }
 
   return (
-    <div className="min-h-screen bg-cloud text-ink transition-colors duration-300">
+    <div className="app-shell relative min-h-screen overflow-hidden bg-cloud text-ink transition-colors duration-300">
+      <div className="ambient-layer" aria-hidden="true">
+        <span className="ambient-beam ambient-beam-one" />
+        <span className="ambient-beam ambient-beam-two" />
+        <span className="mesh-grid" />
+      </div>
       <a href="#main-content" className="skip-link">Skip to content</a>
-      <header className="sticky top-0 z-30 border-b border-line/70 bg-surface/75 backdrop-blur-xl">
+      <header className="sticky top-0 z-30 border-b border-line/70 bg-surface/72 shadow-sm backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-3">
           <Link to="/dashboard" className="group inline-flex items-center gap-3">
             <span className="brand-mark grid size-10 place-items-center rounded-lg text-sm font-black text-cloud shadow-lg transition group-hover:-translate-y-0.5">
@@ -40,7 +45,7 @@ export function AppLayout() {
               <span className="hidden text-xs text-muted sm:block">Expense equity studio</span>
             </span>
           </Link>
-          <nav className="flex flex-wrap items-center gap-1 rounded-lg border border-line bg-elevated/55 p-1">
+          <nav className="nav-rail flex flex-wrap items-center gap-1 rounded-lg border border-line bg-elevated/55 p-1 shadow-inner">
             <NavItem to="/dashboard" icon={<LayoutDashboard size={16} />} label="Dashboard" />
             <NavItem to="/groups/new" icon={<Plus size={16} />} label="Group" />
             <NavItem to="/imports" icon={<FileUp size={16} />} label="Import" />
@@ -78,15 +83,15 @@ export function AppLayout() {
           </nav>
         </div>
       </header>
-      <main id="main-content" className="mx-auto max-w-7xl px-4 py-6 md:py-8">
+      <main id="main-content" className="relative z-10 mx-auto max-w-7xl px-4 py-6 md:py-8">
         {demoMode.enabled && <DemoModeBar />}
         <AnimatePresence mode="wait">
           <motion.div
             key={location.pathname}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.18, ease: "easeOut" }}
+            initial={{ opacity: 0, y: 18, filter: "blur(8px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            exit={{ opacity: 0, y: -10, filter: "blur(6px)" }}
+            transition={{ duration: 0.32, ease: "easeOut" }}
           >
             <Outlet />
           </motion.div>
@@ -98,7 +103,12 @@ export function AppLayout() {
 
 function DemoModeBar() {
   return (
-    <section className="mb-6 overflow-hidden rounded-lg border border-mint/30 bg-mint/10 p-4">
+    <motion.section
+      className="mb-6 overflow-hidden rounded-lg border border-mint/30 bg-mint/10 p-4 shadow-xl"
+      initial={{ opacity: 0, y: -12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <div className="inline-flex items-center gap-2 rounded-full bg-surface/80 px-3 py-1 text-xs font-bold text-mint">
@@ -121,7 +131,7 @@ function DemoModeBar() {
         <DemoTip title="2. Prove" body="Open Rohan's balance and trace the running total." />
         <DemoTip title="3. Close" body="Open who pays whom and record one settlement." />
       </div>
-    </section>
+    </motion.section>
   );
 }
 
@@ -129,7 +139,7 @@ function DemoLink({ to, icon, label }: { to: string; icon: ReactNode; label: str
   return (
     <Link
       to={to}
-      className="focus-ring inline-flex min-h-10 items-center justify-center gap-2 rounded-md border border-line bg-surface px-3 text-sm font-bold text-ink transition hover:-translate-y-0.5 hover:border-mint"
+      className="focus-ring inline-flex min-h-10 items-center justify-center gap-2 rounded-md border border-line bg-surface px-3 text-sm font-bold text-ink shadow-sm transition hover:-translate-y-0.5 hover:border-mint hover:shadow-lg"
     >
       {icon} {label}
     </Link>
@@ -138,7 +148,7 @@ function DemoLink({ to, icon, label }: { to: string; icon: ReactNode; label: str
 
 function DemoTip({ title, body }: { title: string; body: string }) {
   return (
-    <div className="rounded-md border border-line bg-surface/70 p-3">
+    <div className="rounded-md border border-line bg-surface/70 p-3 shadow-sm transition hover:-translate-y-0.5 hover:border-mint/50">
       <p className="inline-flex items-center gap-2 text-sm font-bold text-ink">
         <Lightbulb size={14} className="text-mint" /> {title}
       </p>
@@ -151,8 +161,8 @@ function NavItem({ to, icon, label }: { to: string; icon: ReactNode; label: stri
   return (
     <NavLink
       className={({ isActive }) =>
-        `focus-ring inline-flex min-h-9 items-center gap-2 rounded-md px-3 text-sm font-semibold transition ${
-          isActive ? "bg-surface text-ink shadow-sm" : "text-muted hover:bg-surface/70 hover:text-ink"
+        `focus-ring relative inline-flex min-h-9 items-center gap-2 overflow-hidden rounded-md px-3 text-sm font-semibold transition ${
+          isActive ? "nav-item-active bg-surface text-ink shadow-sm" : "text-muted hover:bg-surface/70 hover:text-ink"
         }`
       }
       to={to}

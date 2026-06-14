@@ -119,7 +119,12 @@ export function DashboardPage() {
         </div>
       </section>
 
-      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <motion.section
+        className="grid gap-4 md:grid-cols-2 xl:grid-cols-4"
+        initial="hidden"
+        animate="show"
+        variants={{ hidden: {}, show: { transition: { staggerChildren: 0.07 } } }}
+      >
         {loading ? (
           <>
             <MetricSkeleton />
@@ -159,7 +164,7 @@ export function DashboardPage() {
             />
           </>
         )}
-      </section>
+      </motion.section>
 
       <section className="grid gap-4 xl:grid-cols-[1.35fr_0.65fr]">
         <Panel title="Interactive balance overview">
@@ -259,7 +264,10 @@ function MetricCard({
 }) {
   const toneClass = tone === "mint" ? "text-mint bg-mint/10" : tone === "coral" ? "text-coral bg-coral/10" : "text-ink bg-elevated";
   return (
-    <div className="glass-panel group rounded-lg p-5 transition duration-200 hover:-translate-y-1 hover:shadow-2xl">
+    <motion.div
+      variants={{ hidden: { opacity: 0, y: 18 }, show: { opacity: 1, y: 0 } }}
+      className="glass-panel stat-card group rounded-lg p-5 transition duration-200 hover:-translate-y-1 hover:shadow-2xl"
+    >
       <div className="flex items-start justify-between gap-3">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted">{label}</p>
@@ -268,7 +276,7 @@ function MetricCard({
         <span className={`grid size-10 place-items-center rounded-md transition group-hover:scale-110 ${toneClass}`}>{icon}</span>
       </div>
       <p className="mt-3 text-xs text-muted">{caption}</p>
-    </div>
+    </motion.div>
   );
 }
 
@@ -322,9 +330,11 @@ function BalanceBar({
         <span className={positive ? "font-semibold text-mint" : "font-semibold text-coral"}>{formatMoney(user.netCents)}</span>
       </div>
       <div className="h-2 overflow-hidden rounded-full bg-line/70">
-        <div
+        <motion.div
           className={`h-full rounded-full transition-all duration-500 ${positive ? "bg-mint" : "bg-coral"}`}
-          style={{ width }}
+          initial={{ width: "0%" }}
+          animate={{ width }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
         />
       </div>
     </button>
