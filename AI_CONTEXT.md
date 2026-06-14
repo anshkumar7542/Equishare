@@ -533,7 +533,7 @@
 - Social and convenience features such as friend requests, notifications, invitations, payments, OCR, analytics, and mobile apps are intentionally excluded from the 3-day MVP.
 
 ## Product Understanding
-- FairShare is a simplified Splitwise-style shared expense app.
+- EquiShare is a simplified Splitwise-style shared expense app.
 - The user problem is remembering who paid for shared costs, calculating who owes whom, and recording when people settle up.
 - The product is group-centered because the target situations are trips, roommates, and student/friend groups.
 - The dashboard provides an overall cross-group financial picture.
@@ -901,7 +901,7 @@
 - 2026-06-14 documentation artifact: created `KEY_PROMPTS.md` to demonstrate effective AI collaboration beyond simple code generation.
 
 ## Resolved Ambiguities
-- Branding: original generic branding `FairShare`.
+- Branding: original generic branding `EquiShare`.
 - Authentication: email/password, bcrypt hash, HTTP-only JWT cookie session.
 - Authorization: authenticated users only; group resources require current group membership.
 - Database: PostgreSQL with Prisma schema described above.
@@ -930,7 +930,7 @@
 - Responsive UI, basic security validation, maintainable code, developer docs, production deployment: covered by non-functional requirements and build plan.
 
 ## Implementation Assumptions
-- Branding: use original generic branding named `FairShare`; do not use Splitwise logos, colors, or protected branding.
+- Branding: use original generic branding named `EquiShare`; do not use Splitwise logos, colors, or protected branding.
 - User fields: `id`, `name`, `email`, `passwordHash`, `createdAt`, `updatedAt`.
 - Password policy: minimum 8 characters.
 - Demo users: seed script creates demo users for local/demo use; public signup remains available.
@@ -990,7 +990,7 @@
 - 2026-06-14: Authentication files in scope: `server/src/modules/auth/auth.routes.ts`, `server/src/middleware/auth.ts`, `client/src/features/auth/AuthProvider.tsx`, `client/src/features/auth/AuthForm.tsx`, `client/src/features/auth/LoginPage.tsx`, `client/src/features/auth/SignupPage.tsx`, and `client/src/app/ProtectedRoute.tsx`.
 - 2026-06-14: Authentication implementation details: signup creates a user after Zod validation, rejects duplicate emails, hashes passwords with bcrypt, sets an HTTP-only JWT cookie, and returns only public user fields.
 - 2026-06-14: Authentication implementation details: login validates email/password shape, compares the submitted password with the stored bcrypt hash, sets a new HTTP-only JWT cookie, and returns only public user fields.
-- 2026-06-14: Authentication implementation details: logout clears the `fairshare_session` cookie and returns HTTP 204.
+- 2026-06-14: Authentication implementation details: logout clears the `equishare_session` cookie and returns HTTP 204.
 - 2026-06-14: Authentication implementation details: protected backend routes use `requireAuth`, verify the JWT, load the current user from the database, and attach `req.user`.
 - 2026-06-14: Authentication implementation details: protected frontend routes use `AuthProvider` plus `ProtectedRoute`; the app checks `/api/auth/me` on load and redirects unauthenticated users to `/login`.
 - 2026-06-14: Authentication implementation details: validation errors follow the project API error shape `{ error: { message, details? } }`; frontend auth forms show the error message.

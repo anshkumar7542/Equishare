@@ -169,7 +169,7 @@ prisma/
 - End-to-end browser tests are optional if time remains.
 
 ## Assumptions Made
-- The app uses original generic branding named `FairShare`.
+- The app uses original generic branding named `EquiShare`.
 - A single full-stack deployment is acceptable for the assignment.
 - A REST API is acceptable.
 - TypeScript is acceptable on both frontend and backend.

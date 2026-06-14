@@ -1,4 +1,4 @@
-# FairShare
+# Equishare
 
 ## Important Assignment Pivot
 The assignment has changed. This project must now become a shared expenses app for flatmates Aisha, Rohan, Priya, Meera, Dev, and Sam, centered on importing `expenses_export.csv`, detecting anomalies, supporting membership changes over time, and producing explainable balances.
@@ -16,7 +16,7 @@ New required deliverables:
 - GitHub repo with meaningful commit history
 - Public deployed app URL
 
-FairShare is a simplified Splitwise-style app for friends, roommates, and small groups to track shared expenses, group balances, expense discussions, and settlements.
+Equishare is a simplified Splitwise-style app for friends, roommates, and small groups to track shared expenses, group balances, expense discussions, and settlements.
 
 ## Tech Stack
 - React, Vite, TypeScript, Tailwind CSS
@@ -27,11 +27,12 @@ FairShare is a simplified Splitwise-style app for friends, roommates, and small 
 ## Local Setup
 1. Install dependencies: `pnpm install`
 2. Copy `.env.example` to `.env` and set `DATABASE_URL` and `JWT_SECRET`.
-3. Generate Prisma client: `pnpm run prisma:generate`
-4. Run migrations: `pnpm run prisma:migrate`
-5. Seed demo data: `pnpm run seed`
-6. Start the API server: `pnpm run dev:server`
-7. In a second terminal, start the frontend: `pnpm run dev:client`
+3. Start PostgreSQL: `pnpm run db:up` (requires Docker Desktop) or start your own PostgreSQL server on `localhost:5432`.
+4. Generate Prisma client: `pnpm run prisma:generate`
+5. Run migrations: `pnpm run prisma:migrate`
+6. Seed demo data: `pnpm run seed`
+7. Start the API server: `pnpm run dev:server`
+8. In a second terminal, start the frontend: `pnpm run dev:client`
 
 The API server runs on `http://localhost:4000`. The frontend runs on `http://localhost:5173` and proxies `/api` requests to the API server. In production, the server also serves the built frontend.
 
@@ -41,6 +42,9 @@ The API server runs on `http://localhost:4000`. The frontend runs on `http://loc
 - `pnpm run build`: build frontend and backend.
 - `pnpm run start`: run compiled backend.
 - `pnpm run test`: run backend tests.
+- `pnpm run db:up`: start the local PostgreSQL Docker container.
+- `pnpm run db:down`: stop the local PostgreSQL Docker container.
+- `pnpm run db:logs`: follow local PostgreSQL logs.
 - `pnpm run prisma:migrate`: create/apply local migrations.
 - `pnpm run prisma:deploy`: apply migrations in production.
 - `pnpm run seed`: seed demo users and a demo group.
@@ -113,7 +117,7 @@ Set these on the deployment platform.
 
 | Name | Required | Example | Notes |
 | --- | --- | --- | --- |
-| `DATABASE_URL` | Yes | `postgresql://user:password@host:5432/fairshare?schema=public` | Hosted PostgreSQL connection string. Use the provider's pooled/internal URL if recommended. |
+| `DATABASE_URL` | Yes | `postgresql://user:password@host:5432/equishare?schema=public` | Hosted PostgreSQL connection string. Use the provider's pooled/internal URL if recommended. |
 | `JWT_SECRET` | Yes | `generate-a-long-random-secret` | Use a high-entropy value, at least 32 characters. Rotating this signs out all users. |
 | `NODE_ENV` | Yes | `production` | Enables secure cookie settings and static frontend serving. |
 | `PORT` | Usually provided | `4000` | Most hosts inject this automatically. The server reads it from the environment. |
@@ -277,4 +281,4 @@ Backend-only auth checks can also be made against:
 - `POST /api/auth/logout`
 - `GET /api/auth/me`
 
-All protected API routes require the `fairshare_session` HTTP-only cookie set by signup/login.
+All protected API routes require the `equishare_session` HTTP-only cookie set by signup/login.

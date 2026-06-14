@@ -4,7 +4,7 @@ import { env, isProduction } from "../config/env.js";
 import { prisma } from "../prisma/client.js";
 import { HttpError } from "../utils/http.js";
 
-const cookieName = "fairshare_session";
+const cookieName = "equishare_session";
 
 export function signSession(userId: string) {
   return jwt.sign({ sub: userId }, env.JWT_SECRET, { expiresIn: "7d" });
